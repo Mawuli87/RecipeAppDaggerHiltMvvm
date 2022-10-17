@@ -19,10 +19,11 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     application: Application,
     private val repository: Repository
+    ): AndroidViewModel(application){
 
-): AndroidViewModel(application){
+
     /**  Retrofit remote data */
-    private var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
+    var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
 
     /** get recipe data */
     fun getRecipes(queries: Map<String, String>) = viewModelScope.launch {
