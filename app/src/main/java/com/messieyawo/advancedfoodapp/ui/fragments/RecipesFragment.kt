@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.messieyawo.advancedfoodapp.data.adapters.RecipesAdapter
 import com.messieyawo.advancedfoodapp.data.viewmodel.MainViewModel
+import com.messieyawo.advancedfoodapp.data.viewmodel.RecipesViewModel
 import com.messieyawo.advancedfoodapp.databinding.FragmentRecipesBinding
 import com.messieyawo.advancedfoodapp.utils.Constants.Companion.API_KEY
 import com.messieyawo.advancedfoodapp.utils.NetworkResult
@@ -26,10 +27,13 @@ private lateinit var recyclerView: RecyclerView
     }
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
+    private lateinit var recipesViewModel: RecipesViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        recipesViewModel = ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +51,7 @@ private lateinit var recyclerView: RecyclerView
 
     private fun requestApiData() {
         Log.d("RecipesFragment", "requestApiData called!")
-        mainViewModel.getRecipes(applyQueries())
+        mainViewModel.getRecipes(recipesViewModel.applyQueries())
         mainViewModel.recipesResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -72,18 +76,7 @@ private lateinit var recyclerView: RecyclerView
         }
     }
 
-    private fun applyQueries():HashMap<String,String>{
-        val queries: HashMap<String,String> = HashMap()
 
-        queries["number"] = ""
-        queries["apiKey"] = API_KEY
-        queries["type"] = "snack"
-        queries["diet"] = "vegan"
-        queries["addRecipeInformation"] = "true"
-        queries["fillIngredients"] = "true"
-
-        return queries
-    }
 
     private fun setUpRecyclerView() {
         binding.recyclerview.adapter = mAdapter
