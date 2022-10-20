@@ -7,17 +7,33 @@
 
     <fragment
         android:id="@+id/recipesFragment"
-        android:name="com.messieyawo.advancedfoodapp.ui.fragments.RecipesFragment"
+        android:name="com.messieyawo.advancedfoodapp.ui.fragments.recipes.RecipesFragment"
         android:label="Food"
-        tools:layout="@layout/fragment_recipes" />
+        tools:layout="@layout/fragment_recipes" >
+        <argument
+            android:name="backFromBottomSheet"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_recipesFragment_to_rcipeBottomSheetFragment"
+            app:destination="@id/recipeBottomSheetFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteRecipesFragment"
-        android:name="com.messieyawo.advancedfoodapp.ui.fragments.FavoriteRecipesFragment"
+        android:name="com.messieyawo.advancedfoodapp.ui.fragments.favorite.FavoriteRecipesFragment"
         android:label="Favorite recipes"
         tools:layout="@layout/fragment_favorite_recipes" />
     <fragment
         android:id="@+id/foodJokeFragment"
-        android:name="com.messieyawo.advancedfoodapp.ui.fragments.FoodJokeFragment"
+        android:name="com.messieyawo.advancedfoodapp.ui.fragments.foodJoke.FoodJokeFragment"
         android:label="Food Joke"
         tools:layout="@layout/fragment_food_joke" />
+    <dialog
+        android:id="@+id/recipeBottomSheetFragment"
+        android:name="com.messieyawo.advancedfoodapp.ui.fragments.recipes.recipeBottomSheet.RcipeBottomSheetFragment"
+        android:label="RcipeBottomSheetFragment" >
+        <action
+            android:id="@+id/action_recipeBottomSheetFragment_to_recipesFragment"
+            app:destination="@id/recipesFragment" />
+    </dialog>
 </navigation>
